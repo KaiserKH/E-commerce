@@ -5,6 +5,7 @@ use App\Core\Auth;
 use App\Core\Config;
 use App\Core\Csrf;
 use App\Core\Session;
+use App\Services\CurrencyService;
 
 if (!function_exists('env')) {
     function env(string $key, mixed $default = null): mixed
@@ -74,8 +75,15 @@ if (!function_exists('auth_user')) {
 if (!function_exists('money')) {
     function money(float|int|string $amount, ?string $currency = null): string
     {
-        $symbol = $currency ?? (string) config('app.currency_symbol', '৳');
+        $symbol = $currency ?? (new CurrencyService())->symbol();
         return $symbol . number_format((float) $amount, 2);
+    }
+}
+
+if (!function_exists('currency_code')) {
+    function currency_code(): string
+    {
+        return (new CurrencyService())->code();
     }
 }
 

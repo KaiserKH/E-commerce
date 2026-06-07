@@ -7,6 +7,7 @@ use App\Core\Auth;
 use App\Core\Controller;
 use App\Models\Order;
 use App\Services\CartService;
+use App\Services\CurrencyService;
 use App\Services\InvoiceService;
 use App\Services\Payment\PaymentManager;
 
@@ -40,7 +41,7 @@ final class CheckoutController extends Controller
             'tax_total' => 0,
             'discount_total' => 0,
             'grand_total' => $cartService->subtotal(),
-            'currency' => config('app.currency'),
+            'currency' => (new CurrencyService())->code(),
             'customer_name' => (string) $request->input('customer_name'),
             'customer_email' => (string) $request->input('customer_email'),
             'customer_phone' => (string) $request->input('customer_phone'),

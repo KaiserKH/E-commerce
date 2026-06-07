@@ -56,6 +56,8 @@ final class App
         $router->get('/dashboard', [DashboardController::class, 'index'], [AuthMiddleware::class]);
         $router->get('/vendor/dashboard', [VendorController::class, 'dashboard'], [AuthMiddleware::class]);
         $router->get('/admin/dashboard', [AdminController::class, 'dashboard'], [AuthMiddleware::class]);
+        $router->get('/admin/settings/currency', [AdminController::class, 'currencySettings'], [AuthMiddleware::class]);
+        $router->post('/admin/settings/currency', [AdminController::class, 'updateCurrency'], [AuthMiddleware::class, CsrfMiddleware::class]);
 
         $router->get('/pages/{slug}', [PageController::class, 'show']);
         $router->get('/contact', [ContactController::class, 'show']);

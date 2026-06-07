@@ -8,7 +8,7 @@ return [
     'key' => env('APP_KEY', ''),
     'timezone' => 'UTC',
     'locale' => 'en',
-    'currency' => 'BDT',
-    'currency_symbol' => '৳',
+    'currency' => 'INR',
+    'currency_symbol' => '₹',
     'pagination' => 12,
 ];
