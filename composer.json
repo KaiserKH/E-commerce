@@ -1,0 +1,16 @@
+{
+  "name": "ecommerce/pure-php-platform",
+  "description": "Pure PHP eCommerce platform with MVC-inspired architecture",
+  "type": "project",
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "app/"
+    },
+    "files": [
+      "app/Helpers/functions.php"
+    ]
+  }
+}
