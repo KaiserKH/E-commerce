@@ -1,0 +1,6 @@
+<section class="container py-5">
+    <div class="glass p-4 p-lg-5">
+        <h1 class="fw-bold mb-3">Admin Dashboard</h1>
+        <p class="text-muted mb-0">Central administration, analytics, inventory, orders, and content management.</p>
+    </div>
+</section>

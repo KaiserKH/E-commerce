@@ -5,5 +5,5 @@ namespace App\Models;
 
 final class Page extends BaseModel
 {
-    protected string $table = 'cms_pages';
+    protected string $table = 'pages';
 }
