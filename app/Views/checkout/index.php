@@ -6,6 +6,9 @@
             <div class="glass p-4">
                 <form method="post" action="<?= url('checkout/place') ?>" class="row g-3">
                     <?= csrf_field() ?>
+                    <?php if (auth_user()): ?>
+                        <div class="col-12 text-muted small">Signed in as <?= e(auth_user()['email'] ?? '') ?></div>
+                    <?php endif; ?>
                     <div class="col-md-6"><input name="customer_name" class="form-control" placeholder="Full name" required></div>
                     <div class="col-md-6"><input name="customer_email" type="email" class="form-control" placeholder="Email" required></div>
                     <div class="col-md-6"><input name="customer_phone" class="form-control" placeholder="Phone" required></div>

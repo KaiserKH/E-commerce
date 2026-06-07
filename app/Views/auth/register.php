@@ -11,6 +11,9 @@
                     <input type="password" name="password" class="form-control" placeholder="Password" required>
                     <button class="btn btn-primary">Create account</button>
                 </form>
+                <div class="mt-3 small">
+                    <a href="<?= url('vendor/register') ?>">Register as a vendor</a>
+                </div>
             </div>
         </div>
     </div>

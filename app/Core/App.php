@@ -37,13 +37,15 @@ final class App
         $router->post('/cart/add', [CartController::class, 'add'], [CsrfMiddleware::class]);
         $router->post('/cart/update', [CartController::class, 'update'], [CsrfMiddleware::class]);
         $router->post('/cart/remove', [CartController::class, 'remove'], [CsrfMiddleware::class]);
-        $router->get('/checkout', [CheckoutController::class, 'index'], [AuthMiddleware::class]);
-        $router->post('/checkout/place', [CheckoutController::class, 'place'], [AuthMiddleware::class, CsrfMiddleware::class]);
+        $router->get('/checkout', [CheckoutController::class, 'index']);
+        $router->post('/checkout/place', [CheckoutController::class, 'place'], [CsrfMiddleware::class]);
 
         $router->get('/login', [AuthController::class, 'showLogin']);
         $router->post('/login', [AuthController::class, 'login'], [CsrfMiddleware::class, RateLimitMiddleware::class]);
         $router->get('/register', [AuthController::class, 'showRegister']);
         $router->post('/register', [AuthController::class, 'register'], [CsrfMiddleware::class, RateLimitMiddleware::class]);
+        $router->get('/vendor/register', [AuthController::class, 'showVendorRegister']);
+        $router->post('/vendor/register', [AuthController::class, 'vendorRegister'], [CsrfMiddleware::class, RateLimitMiddleware::class]);
         $router->get('/forgot-password', [AuthController::class, 'showForgot']);
         $router->post('/forgot-password', [AuthController::class, 'forgotPassword'], [CsrfMiddleware::class, RateLimitMiddleware::class]);
         $router->get('/reset-password/{token}', [AuthController::class, 'showReset']);
