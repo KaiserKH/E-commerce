@@ -30,6 +30,24 @@
 </section>
 
 <section class="container py-5">
+    <div class="glass p-4 p-lg-5">
+        <div class="row align-items-center g-3">
+            <div class="col-lg-6">
+                <h2 class="h3 fw-bold mb-2">Stay updated</h2>
+                <p class="text-muted mb-0">Subscribe for offers, new launches, and seasonal promotions.</p>
+            </div>
+            <div class="col-lg-6">
+                <form method="post" action="<?= url('api/newsletter/subscribe') ?>" class="d-flex gap-2">
+                    <?= csrf_field() ?>
+                    <input type="email" name="email" class="form-control" placeholder="Email address" required>
+                    <button class="btn btn-primary" type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container py-5">
     <div class="row g-4">
         <?php foreach (array_slice($categories ?? [], 0, 6) as $category): ?>
             <div class="col-6 col-lg-2">

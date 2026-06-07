@@ -49,6 +49,7 @@
     <div class="container text-center text-muted">
         <p class="mb-1">&copy; <?= date('Y') ?> <?= e(config('app.name')) ?></p>
         <div class="small">
+            <a href="<?= url('contact') ?>" class="text-muted me-3">Contact</a>
             <a href="<?= url('pages/privacy-policy') ?>" class="text-muted me-3">Privacy</a>
             <a href="<?= url('pages/terms-conditions') ?>" class="text-muted me-3">Terms</a>
             <a href="<?= url('pages/faq') ?>" class="text-muted">FAQ</a>

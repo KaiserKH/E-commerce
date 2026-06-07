@@ -11,6 +11,7 @@ use App\Controllers\CheckoutController;
 use App\Controllers\DashboardController;
 use App\Controllers\HomeController;
 use App\Controllers\PageController;
+use App\Controllers\ContactController;
 use App\Controllers\ProductController;
 use App\Controllers\ShopController;
 use App\Controllers\VendorController;
@@ -55,8 +56,11 @@ final class App
         $router->get('/admin/dashboard', [AdminController::class, 'dashboard'], [AuthMiddleware::class]);
 
         $router->get('/pages/{slug}', [PageController::class, 'show']);
+        $router->get('/contact', [ContactController::class, 'show']);
+        $router->post('/contact', [ContactController::class, 'submit'], [CsrfMiddleware::class]);
 
         $router->get('/api/search', [ApiController::class, 'search']);
         $router->post('/api/cart/add', [ApiController::class, 'cartAdd'], [CsrfMiddleware::class]);
+        $router->post('/api/newsletter/subscribe', [ApiController::class, 'newsletterSubscribe'], [CsrfMiddleware::class]);
     }
 }
