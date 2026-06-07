@@ -26,4 +26,4 @@ Pure PHP 8+ eCommerce application with MVC-inspired structure, PDO database acce
 - `app/Services` domain services
 - `database/schema.sql` full schema
 - `database/seeds/seed.sql` starter data
-- `deploy/nginx.conf.example` Nginx sample
+- `deploy/nginx.conf.example` Nginx sample# E-commerce
