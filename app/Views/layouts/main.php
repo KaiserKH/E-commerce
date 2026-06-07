@@ -1,10 +1,10 @@
 <?php /** @var string $content */ ?>
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="<?= e((string) (new \App\Services\SettingsService())->get('locale', config('app.locale', 'en'))) ?>" data-theme="light">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= e($seo['title'] ?? config('app.name')) ?></title>
+    <title><?= e($seo['title'] ?? (new \App\Services\SettingsService())->get('site_name', config('app.name'))) ?></title>
     <meta name="description" content="<?= e($seo['description'] ?? config('seo.default_description')) ?>">
     <meta name="keywords" content="<?= e($seo['keywords'] ?? config('seo.default_keywords')) ?>">
     <meta name="csrf-token" content="<?= e(csrf_token()) ?>">
@@ -15,7 +15,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark nav-glass sticky-top">
     <div class="container">
-        <a class="navbar-brand fw-bold" href="<?= url() ?>"><?= e(config('app.name')) ?></a>
+        <a class="navbar-brand fw-bold" href="<?= url() ?>"><?= e((new \App\Services\SettingsService())->get('site_name', config('app.name'))) ?></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navMenu">
             <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
@@ -47,7 +47,7 @@
 
 <footer class="py-5 mt-5 border-top border-light border-opacity-10">
     <div class="container text-center text-muted">
-        <p class="mb-1">&copy; <?= date('Y') ?> <?= e(config('app.name')) ?></p>
+        <p class="mb-1">&copy; <?= date('Y') ?> <?= e((new \App\Services\SettingsService())->get('site_name', config('app.name'))) ?></p>
         <div class="small">
             <a href="<?= url('contact') ?>" class="text-muted me-3">Contact</a>
             <a href="<?= url('pages/privacy-policy') ?>" class="text-muted me-3">Privacy</a>

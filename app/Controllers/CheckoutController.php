@@ -10,14 +10,24 @@ use App\Services\CartService;
 use App\Services\CurrencyService;
 use App\Services\InvoiceService;
 use App\Services\Payment\PaymentManager;
+use App\Services\SettingsService;
 
 final class CheckoutController extends Controller
 {
     public function index(): string
     {
+        $settings = new SettingsService();
+        $subtotal = (new CartService())->subtotal();
+        $taxRate = $settings->getFloat('tax_rate', 0.0);
+        $shippingFlatRate = $settings->getFloat('shipping_flat_rate', 0.0);
+
         return $this->view('checkout/index', [
             'cart' => (new CartService())->all(),
-            'subtotal' => (new CartService())->subtotal(),
+            'subtotal' => $subtotal,
+            'taxRate' => $taxRate,
+            'shippingFlatRate' => $shippingFlatRate,
+            'taxAmount' => round($subtotal * ($taxRate / 100), 2),
+            'grandTotal' => round($subtotal + ($subtotal * ($taxRate / 100)) + $shippingFlatRate, 2),
         ]);
     }
 
@@ -29,6 +39,13 @@ final class CheckoutController extends Controller
             return $this->view('checkout/index', ['cart' => [], 'subtotal' => 0, 'error' => 'Your cart is empty.']);
         }
 
+        $settings = new SettingsService();
+        $subtotal = $cartService->subtotal();
+        $taxRate = $settings->getFloat('tax_rate', 0.0);
+        $shippingFlatRate = $settings->getFloat('shipping_flat_rate', 0.0);
+        $taxAmount = round($subtotal * ($taxRate / 100), 2);
+        $grandTotal = round($subtotal + $taxAmount + $shippingFlatRate, 2);
+
         $orderModel = new Order();
         $orderId = $orderModel->createOrder([
             'user_id' => Auth::id(),
@@ -36,11 +53,11 @@ final class CheckoutController extends Controller
             'status' => 'pending',
             'payment_method' => $request->input('payment_method', 'cod'),
             'payment_status' => 'unpaid',
-            'subtotal' => $cartService->subtotal(),
-            'shipping_total' => 0,
-            'tax_total' => 0,
+            'subtotal' => $subtotal,
+            'shipping_total' => $shippingFlatRate,
+            'tax_total' => $taxAmount,
             'discount_total' => 0,
-            'grand_total' => $cartService->subtotal(),
+            'grand_total' => $grandTotal,
             'currency' => (new CurrencyService())->code(),
             'customer_name' => (string) $request->input('customer_name'),
             'customer_email' => (string) $request->input('customer_email'),
@@ -53,7 +70,7 @@ final class CheckoutController extends Controller
         ], $items);
 
         $payment = (new PaymentManager())->gateway((string) $request->input('payment_method', 'cod'));
-        $paymentResult = $payment->initialize(['id' => $orderId, 'grand_total' => $cartService->subtotal()], []);
+        $paymentResult = $payment->initialize(['id' => $orderId, 'grand_total' => $grandTotal], []);
 
         $invoiceNumber = (new InvoiceService())->number($orderId);
         $cartService->clear();

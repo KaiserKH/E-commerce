@@ -15,7 +15,7 @@ final class Response
 
     public static function redirect(string $path): never
     {
-        header('Location: ' . url($path));
+        header('Location: ' . url($path), true, 303);
         exit;
     }
 }

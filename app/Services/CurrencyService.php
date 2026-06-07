@@ -3,11 +3,15 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Models\Setting;
-
 final class CurrencyService
 {
     private static ?array $cached = null;
+    private SettingsService $settings;
+
+    public function __construct()
+    {
+        $this->settings = new SettingsService();
+    }
 
     public function current(): array
     {
@@ -15,9 +19,8 @@ final class CurrencyService
             return self::$cached;
         }
 
-        $settings = new Setting();
-        $code = strtoupper((string) $settings->get('currency_code', config('app.currency', 'INR')));
-        $symbol = (string) $settings->get('currency_symbol', config('app.currency_symbol', '₹'));
+        $code = strtoupper((string) $this->settings->get('currency_code', config('app.currency', 'INR')));
+        $symbol = (string) $this->settings->get('currency_symbol', config('app.currency_symbol', '₹'));
 
         if ($code === 'USD' && $symbol === '') {
             $symbol = '$';
@@ -53,9 +56,10 @@ final class CurrencyService
             default => '₹',
         };
 
-        $settings = new Setting();
-        $settings->set('currency_code', $code);
-        $settings->set('currency_symbol', $symbol);
+        $this->settings->save([
+            'currency_code' => $code,
+            'currency_symbol' => $symbol,
+        ]);
         self::$cached = ['code' => $code, 'symbol' => $symbol];
     }
 }

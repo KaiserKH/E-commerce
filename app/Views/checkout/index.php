@@ -27,8 +27,9 @@
             <div class="glass p-4">
                 <h2 class="h5 fw-bold">Order Summary</h2>
                 <div class="d-flex justify-content-between mb-2"><span>Subtotal</span><span><?= money($subtotal) ?></span></div>
-                <div class="d-flex justify-content-between mb-2"><span>Shipping</span><span><?= money(0) ?></span></div>
-                <div class="d-flex justify-content-between fw-bold"><span>Total</span><span><?= money($subtotal) ?></span></div>
+                    <div class="d-flex justify-content-between mb-2"><span>Shipping</span><span><?= money($shippingFlatRate ?? 0) ?></span></div>
+                    <div class="d-flex justify-content-between mb-2"><span>Tax (<?= e((string) ($taxRate ?? 0)) ?>%)</span><span><?= money($taxAmount ?? 0) ?></span></div>
+                    <div class="d-flex justify-content-between fw-bold"><span>Total</span><span><?= money($grandTotal ?? $subtotal) ?></span></div>
             </div>
         </div>
     </div>

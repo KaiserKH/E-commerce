@@ -18,6 +18,8 @@ INSERT INTO pages (slug, title, content, meta_title, meta_description, status, c
 ('terms-conditions', 'Terms & Conditions', 'Terms and conditions content goes here.', 'Terms & Conditions', 'Terms for using our service.', 'published', NOW(), NOW());
 
 INSERT INTO settings (setting_key, setting_value, created_at, updated_at) VALUES
+('site_name', 'Ecommerce Pro', NOW(), NOW()),
+('locale', 'en', NOW(), NOW()),
 ('currency_code', 'INR', NOW(), NOW()),
 ('currency_symbol', '₹', NOW(), NOW())
 ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value), updated_at = VALUES(updated_at);
